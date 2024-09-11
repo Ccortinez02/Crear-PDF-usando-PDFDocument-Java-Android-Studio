@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center">
+    android:textAlignment="center"
+    android:visibility="visible"
+    tools:visibility="visible">
 
 
     <EditText
@@ -13,9 +16,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
 
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="202dp"
-        android:layout_marginEnd="33dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="32dp"
         android:hint="Username" />
 
     <EditText
@@ -66,11 +69,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="119dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="118dp"
-        android:layout_marginBottom="173dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="307dp"
         android:text="Forgot Password?"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="visible" />
 </RelativeLayout>
