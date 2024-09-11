@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/background"
+    >
 
     <!--Button for generating the PDF file-->
 
@@ -13,10 +15,12 @@
         android:id="@+id/btnSeleccionarPdf"
         android:layout_width="312dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="443dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="238dp"
         android:text="Seleccionar PDF" />
 
 </RelativeLayout>

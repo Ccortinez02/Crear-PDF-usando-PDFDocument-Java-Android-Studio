@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:textAlignment="center"
     android:visibility="visible"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    android:background="@drawable/background"
+    >
 
 
     <EditText
@@ -15,11 +17,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginStart="43dp"
         android:layout_marginTop="111dp"
         android:layout_marginEnd="32dp"
-        android:hint="Username" />
+        android:hint="Usuario" />
 
     <EditText
         android:id="@+id/password"
@@ -28,12 +31,12 @@
         android:layout_below="@id/username"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-
-
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
-        android:hint="Password"
+        android:hint="Contraseña"
         android:inputType="textPassword" />
 
     <Button
@@ -49,7 +52,8 @@
         android:layout_marginEnd="73dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Login" />
+        android:text="Iniciar Sesion"
+        />
 
     <TextView
         android:id="@+id/txtCreateAccount"
@@ -57,24 +61,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnLogin"
         android:layout_centerHorizontal="true"
-        android:text="Create Account"
+        android:text="Crear Cuenta"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/txtForgotPassword"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/txtCreateAccount"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginBottom="307dp"
+        android:layout_centerHorizontal="true"
         android:text="Forgot Password?"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="20sp"
-        android:visibility="visible" />
+        android:textSize="20sp"/>
 </RelativeLayout>
