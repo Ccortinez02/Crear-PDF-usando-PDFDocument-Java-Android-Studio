@@ -8,10 +8,10 @@
 
     <!--Button for generating the PDF file-->
     <Button
-        android:id="@+id/btnCrearPdf"
+        android:id="@+id/btnSeleccionarPdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Crear PDF" />
+        android:text="Seleccionar PDF"/>
 
 </RelativeLayout>
