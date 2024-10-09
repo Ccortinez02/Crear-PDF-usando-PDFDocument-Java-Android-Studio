@@ -96,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
             InputStream inputStream = getContentResolver().openInputStream(pdfUri);
             File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ArchivoConvertido.docx");
 
-            // Aquí puedes implementar la lógica para convertir PDF a Word usando una biblioteca de conversión
-            // De momento, solo copia el contenido del archivo como ejemplo.
             FileOutputStream outputStream = new FileOutputStream(outputFile);
             byte[] buffer = new byte[1024];
             int length;
@@ -122,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
             InputStream inputStream = getContentResolver().openInputStream(wordUri);
             File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ArchivoConvertido.pdf");
 
-            // Aquí puedes implementar la lógica para convertir Word a PDF usando una biblioteca de conversión
-            // De momento, solo copia el contenido del archivo como ejemplo.
             FileOutputStream outputStream = new FileOutputStream(outputFile);
             byte[] buffer = new byte[1024];
             int length;
