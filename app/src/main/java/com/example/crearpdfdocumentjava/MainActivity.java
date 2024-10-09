@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void goBack(View view) {
+        // Finaliza la actividad actual y regresa a la anterior
+        finish();
+    }
+
     // Verificar si los permisos de almacenamiento han sido concedidos
     private boolean checkPermission() {
         int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);

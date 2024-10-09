@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCreateAccount"
         android:layout_centerHorizontal="true"
-        android:text="Forgot Password?"
+        android:text="Olvidaste tu Contraseña?"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp"/>
 </RelativeLayout>
