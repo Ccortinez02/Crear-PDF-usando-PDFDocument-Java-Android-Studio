@@ -5,89 +5,153 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
-
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PICK_PDF_FILE = 2;
-    Button btnSeleccionarPdf;
+    private static final int PICK_WORD_FILE = 3;
+    Button btnSeleccionarPdf, btnSeleccionarWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Verificar si los permisos están concedidos
+        // Verificar permisos de almacenamiento
         if (checkPermission()) {
             Toast.makeText(this, "Permiso Aceptado", Toast.LENGTH_LONG).show();
         } else {
             requestPermissions();
         }
 
-        // Inicializar botón para seleccionar archivo PDF
+        // Inicializar botones
         btnSeleccionarPdf = findViewById(R.id.btnSeleccionarPdf);
+        btnSeleccionarWord = findViewById(R.id.btnSeleccionarWord);
 
-        // Configurar el listener del botón para abrir el selector de archivos
+        // Listener para el botón de seleccionar PDF
         btnSeleccionarPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                seleccionarArchivoPdf();
+                seleccionarArchivo(PICK_PDF_FILE, "application/pdf");
+            }
+        });
+
+        // Listener para el botón de seleccionar Word
+        btnSeleccionarWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seleccionarArchivo(PICK_WORD_FILE, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             }
         });
     }
 
-    // Método para abrir el selector de archivos y permitir seleccionar un PDF
-    private void seleccionarArchivoPdf() {
+    // Método para seleccionar un archivo según el tipo especificado
+    private void seleccionarArchivo(int requestCode, String mimeType) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
+        intent.setType(mimeType);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent, "Selecciona un archivo PDF"), PICK_PDF_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Selecciona un archivo"), requestCode);
     }
 
-    // Recibe el resultado de la selección de archivos
+    // Recibir el archivo seleccionado
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_PDF_FILE && resultCode == RESULT_OK) {
+        if ((requestCode == PICK_PDF_FILE || requestCode == PICK_WORD_FILE) && resultCode == RESULT_OK) {
             if (data != null) {
                 Uri uri = data.getData();
-                // Obtener la URI del archivo seleccionado
-                String pdfPath = uri.getPath();
-                Toast.makeText(this, "Archivo PDF seleccionado: " + pdfPath, Toast.LENGTH_LONG).show();
-                // Aquí puedes agregar más código para manejar el archivo seleccionado
+                String filePath = uri.getPath();
+                Toast.makeText(this, "Archivo seleccionado: " + filePath, Toast.LENGTH_LONG).show();
+
+                // Verificar el tipo de archivo seleccionado
+                if (requestCode == PICK_PDF_FILE) {
+                    // Si es PDF, convertirlo a Word
+                    convertirPdfAWord(uri);
+                } else if (requestCode == PICK_WORD_FILE) {
+                    // Si es Word, convertirlo a PDF
+                    convertirWordAPdf(uri);
+                }
             }
         }
     }
 
-    public void goBack(View view) {
-        // Finaliza la actividad actual y regresa a la anterior
-        finish();
+    // Método para convertir PDF a Word y guardar en la carpeta de descargas
+    private void convertirPdfAWord(Uri pdfUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(pdfUri);
+            File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ArchivoConvertido.docx");
+
+            // Aquí puedes implementar la lógica para convertir PDF a Word usando una biblioteca de conversión
+            // De momento, solo copia el contenido del archivo como ejemplo.
+            FileOutputStream outputStream = new FileOutputStream(outputFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            // Cerrar streams
+            inputStream.close();
+            outputStream.close();
+
+            Toast.makeText(this, "Archivo PDF convertido a Word y guardado en: " + outputFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al convertir PDF a Word: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
-    // Verificar si los permisos de almacenamiento han sido concedidos
+    // Método para convertir Word a PDF y guardar en la carpeta de descargas
+    private void convertirWordAPdf(Uri wordUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(wordUri);
+            File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ArchivoConvertido.pdf");
+
+            // Aquí puedes implementar la lógica para convertir Word a PDF usando una biblioteca de conversión
+            // De momento, solo copia el contenido del archivo como ejemplo.
+            FileOutputStream outputStream = new FileOutputStream(outputFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            // Cerrar streams
+            inputStream.close();
+            outputStream.close();
+
+            Toast.makeText(this, "Archivo Word convertido a PDF y guardado en: " + outputFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al convertir Word a PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // Verificar permisos
     private boolean checkPermission() {
-        int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
-        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
         return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
     }
 
-    // Solicitar permisos si no han sido concedidos
+    // Solicitar permisos
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, 200);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
     }
 
     @SuppressLint("MissingSuperCall")

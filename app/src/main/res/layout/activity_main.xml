@@ -6,21 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/background"
+    android:background="@drawable/fondo"
     >
 
     <!--Button for generating the PDF file-->
 
     <Button
         android:id="@+id/btnSeleccionarPdf"
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="450dp"
+        android:background="@drawable/custom_button_background"
+        android:text="Seleccionar PDF"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:elevation="8dp"
+        android:padding="16dp"
+        android:gravity="center"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="238dp"
-        android:text="Seleccionar PDF" />
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/btnSeleccionarWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="340dp"
+        android:background="@drawable/custom_button_background"
+        android:text="Seleccionar Word"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:elevation="8dp"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>
