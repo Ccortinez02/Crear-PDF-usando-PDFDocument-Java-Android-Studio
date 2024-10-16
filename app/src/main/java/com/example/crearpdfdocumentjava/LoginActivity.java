@@ -1,7 +1,6 @@
 package com.example.crearpdfdocumentjava;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +14,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     Button btnLogin;
     TextView txtCreateAccount, txtForgotPassword;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        db = new DatabaseHelper(this);
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -31,16 +33,11 @@ public class LoginActivity extends AppCompatActivity {
             String user = username.getText().toString();
             String pass = password.getText().toString();
 
-            // Obtener las credenciales almacenadas en SharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-            String storedUser = sharedPreferences.getString("username", "");
-            String storedPass = sharedPreferences.getString("password", "");
+            // Verificar las credenciales con la base de datos
+            boolean isValid = db.checkUser(user, pass);
 
-            // Comparar las credenciales ingresadas con las almacenadas
-            if (user.equals(storedUser) && pass.equals(storedPass)) {
+            if (isValid) {
                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                // Redirigir a MainActivity (que usa activity_main.xml)
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();  // Finalizar LoginActivity para que no se pueda regresar con el botón 'back'
@@ -58,3 +55,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
+
